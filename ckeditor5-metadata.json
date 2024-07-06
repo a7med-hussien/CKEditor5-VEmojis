@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    {
+      "name": "V emojis",
+      "className": "VEmojis",
+      "description": "Adds text to the editor.",
+      "path": "src/vemojis.js",
+      "uiComponents": [
+        {
+          "name": "vEmojisButton",
+          "type": "Button",
+          "iconPath": "theme/icons/ckeditor.svg"
+        }
+      ]
+    }
+  ]
+}
