@@ -1,6 +1,6 @@
 import { icons } from '../src/index.js';
 
-import ckeditor from './../theme/icons/ckeditor.svg';
+import ckeditor from './../theme/icons/emoji.svg';
 
 describe( 'CKEditor5 VEmojis', () => {
 	describe( 'icons', () => {

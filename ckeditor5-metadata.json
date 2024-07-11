@@ -7,9 +7,9 @@
       "path": "src/vemojis.js",
       "uiComponents": [
         {
-          "name": "vEmojisButton",
+          "name": "VEmojis",
           "type": "Button",
-          "iconPath": "theme/icons/ckeditor.svg"
+          "iconPath": "theme/icons/emoji.svg"
         }
       ]
     }

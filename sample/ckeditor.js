@@ -61,7 +61,7 @@ ClassicEditor
 			'undo',
 			'redo',
 			'|',
-			'vEmojisButton',
+			'VEmojis',
 			'|',
 			'heading',
 			'|',

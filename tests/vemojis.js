@@ -23,7 +23,7 @@ describe( 'VEmojis', () => {
 					VEmojis
 				],
 				toolbar: [
-					'vEmojisButton'
+					'VEmojis'
 				]
 			} );
 		} );
@@ -40,11 +40,11 @@ describe( 'VEmojis', () => {
 		} );
 
 		it( 'should add an icon to the toolbar', () => {
-			expect( editor.ui.componentFactory.has( 'vEmojisButton' ) ).to.equal( true );
+			expect( editor.ui.componentFactory.has( 'VEmojis' ) ).to.equal( true );
 		} );
 
 		it( 'should add a text into the editor after clicking the icon', () => {
-			const icon = editor.ui.componentFactory.create( 'vEmojisButton' );
+			const icon = editor.ui.componentFactory.create( 'VEmojis' );
 
 			expect( editor.getData() ).to.equal( '' );
 

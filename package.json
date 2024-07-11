@@ -65,10 +65,5 @@
     "**/*.css": [
       "stylelint --quiet --allow-empty-input"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }
