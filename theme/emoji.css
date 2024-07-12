@@ -1,3 +1,10 @@
+.vemoji-dropdown {
+	padding-left: var(--ck-spacing-small)!important;
+	padding-right: var(--ck-spacing-small)!important;
+}
+.vemoji-dropdown .ck-dropdown__arrow {
+	display: none!important;
+}
 .ck-emoji-grid-font-size {
     font-size: 1.4em !important;
 }

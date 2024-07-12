@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Plugin, Typing, createDropdown, CKEditorError } from 'ckeditor5';
 
 import EmojiCharactersNavigationView from './ui/emojicharactersnavigationview.js';
@@ -46,14 +47,25 @@ export default class VEmojis extends Plugin {
 			dropdownView.buttonView.set( {
 				label: t( 'Emoji' ),
 				icon: emojiIcon,
-				tooltip: true
+				tooltip: true,
+				class: [ 'vemoji-dropdown' ]
 			} );
 
 			dropdownView.bind( 'isEnabled' ).to( inputCommand );
 
 			// Insert a special character when a tile was clicked.
 			dropdownView.on( 'execute', ( evt, data ) => {
-				editor.execute( 'input', { text: data.character } );
+				if ( data.character.includes( '.svg' ) ) {
+					editor.model.change( writer => {
+						const viewFragment = editor.data.processor.toView( `<img alt="${ data.name }" src="${ data.character }">` );
+						const modelFragment = editor.data.toModel( viewFragment );
+
+						writer.insert( modelFragment, editor.model.document.selection.getFirstPosition() );
+					} );
+				} else {
+					editor.execute( 'input', { text: data.character } );
+				}
+
 				editor.editing.view.focus();
 			} );
 
@@ -75,7 +87,7 @@ export default class VEmojis extends Plugin {
 			return dropdownView;
 		} );
 
-		editor.plugins.get( 'VEmojis' ).addItems( '⚽ ' + t( 'Activity' ), [
+		editor.plugins.get( 'VEmojis' ).addItems( `⚽ ${ t( 'Activity' ) }`, [
 			{ title: 'Person in Suit Levitating', character: '🕴️' },
 			{ title: 'Person Climbing', character: '🧗' },
 			{ title: 'Man Climbing', character: '🧗‍♂️' },
@@ -191,7 +203,7 @@ export default class VEmojis extends Plugin {
 			{ title: 'Bow and Arrow', character: '🏹' }
 		] );
 
-		editor.plugins.get( 'VEmojis' ).addItems( '🍔 ' + t( 'Food & Drink' ), [
+		editor.plugins.get( 'VEmojis' ).addItems( `🍔 ${ t( 'Food & Drink' ) }`, [
 			{ title: 'Grapes', character: '🍇' },
 			{ title: 'Melon', character: '🍈' },
 			{ title: 'Watermelon', character: '🍉' },
@@ -315,15 +327,15 @@ export default class VEmojis extends Plugin {
 			{ title: 'Fork and Knife with Plate', character: '🍽️' },
 			{ title: 'Fork and Knife', character: '🍴' },
 			{ title: 'Spoon', character: '🥄' }
-        ] );
+		] );
 
-		editor.plugins.get( 'VEmojis' ).addItems( '🎌 ' + t( 'Flags' ), [
+		editor.plugins.get( 'VEmojis' ).addItems( `🎌 ${ t( 'Flags' ) }`, [
 			{ title: 'Chequered Flag', character: '🏁' },
 			{ title: 'Triangular Flag', character: '🚩' },
 			{ title: 'Crossed Flags', character: '🎌' },
 			{ title: 'Black Flag', character: '🏴' },
 			{ title: 'White Flag', character: '🏳️' },
-			{ title: 'Rainbow Flag', character: '🏳️‍🌈' },
+			// { title: 'Rainbow Flag', character: '🏳️‍🌈' },
 			{ title: 'Transgender Flag', character: '🏳️‍⚧️' },
 			{ title: 'Pirate Flag', character: '🏴‍☠️' },
 			{ title: 'Flag: Ascension Island', character: '🇦🇨' },
@@ -434,7 +446,6 @@ export default class VEmojis extends Plugin {
 			{ title: 'Flag: Canary Islands', character: '🇮🇨' },
 			{ title: 'Flag: Indonesia', character: '🇮🇩' },
 			{ title: 'Flag: Ireland', character: '🇮🇪' },
-			{ title: 'Flag: Israel', character: '🇮🇱' },
 			{ title: 'Flag: Isle of Man', character: '🇮🇲' },
 			{ title: 'Flag: India', character: '🇮🇳' },
 			{ title: 'Flag: British Indian Ocean Territory', character: '🇮🇴' },
@@ -588,9 +599,9 @@ export default class VEmojis extends Plugin {
 			{ title: 'Flag: Scotland', character: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' },
 			{ title: 'Flag: Wales', character: '🏴󠁧󠁢󠁷󠁬󠁳󠁿' },
 			{ title: 'Flag for Texas (US-TX)', character: '🏴󠁵󠁳󠁴󠁸󠁿' }
-        ] );
+		] );
 
-		editor.plugins.get( 'VEmojis' ).addItems( '🐻 ' + t( 'Animals & Nature' ), [
+		editor.plugins.get( 'VEmojis' ).addItems( `🐻 ${ t( 'Animals & Nature' ) }`, [
 			{ title: 'See-No-Evil Monkey', character: '🙈' },
 			{ title: 'Hear-No-Evil Monkey', character: '🙉' },
 			{ title: 'Speak-No-Evil Monkey', character: '🙊' },
@@ -793,9 +804,9 @@ export default class VEmojis extends Plugin {
 			{ title: 'Sparkles', character: '✨' },
 			{ title: 'Tanabata Tree', character: '🎋' },
 			{ title: 'Pine Decoration', character: '🎍' }
-        ] );
+		] );
 
-		editor.plugins.get( 'VEmojis' ).addItems( '💡 ' + t( 'Objects' ), [
+		editor.plugins.get( 'VEmojis' ).addItems( `💡 ${ t( 'Objects' ) }`, [
 			{ title: 'Love Letter', character: '💌' },
 			{ title: 'Hole', character: '🕳️' },
 			{ title: 'Bomb', character: '💣' },
@@ -1029,9 +1040,9 @@ export default class VEmojis extends Plugin {
 			{ title: 'Moai', character: '🗿' },
 			{ title: 'Placard', character: '🪧' },
 			{ title: 'Potable Water', character: '🚰' }
-        ] );
+		] );
 
-		editor.plugins.get( 'VEmojis' ).addItems( '😃 ' +  t( 'Smileys & People' ), [
+		editor.plugins.get( 'VEmojis' ).addItems( `😃 ${ t( 'Smileys & People' ) }`, [
 			{ title: 'Grinning Face', character: '😀' },
 			{ title: 'Grinning Face with Big Eyes', character: '😃' },
 			{ title: 'Grinning Face with Smiling Eyes', character: '😄' },
@@ -1493,7 +1504,97 @@ export default class VEmojis extends Plugin {
 			{ title: 'Ring', character: '💍' },
 			{ title: 'Briefcase', character: '💼' },
 			{ title: 'Drop of Blood', character: '🩸' }
-        ] );
+		] );
+
+		// editor.plugins.get( 'VEmojis' ).addItems( t( 'SVG Flags' ), [
+		// 	{ title: 'Afghanistan', character: 'https://flagcdn.com/af.svg' },
+		// 	{ title: 'Albania', character: 'https://flagcdn.com/al.svg' },
+		// 	{ title: 'Algeria', character: 'https://flagcdn.com/dz.svg' },
+		// 	{ title: 'Andorra', character: 'https://flagcdn.com/ad.svg' },
+		// 	{ title: 'Angola', character: 'https://flagcdn.com/ao.svg' },
+		// 	{ title: 'Antigua and Barbuda', character: 'https://flagcdn.com/ag.svg' },
+		// 	{ title: 'Argentina', character: 'https://flagcdn.com/ar.svg' },
+		// 	{ title: 'Armenia', character: 'https://flagcdn.com/am.svg' },
+		// 	{ title: 'Australia', character: 'https://flagcdn.com/au.svg' },
+		// 	{ title: 'Austria', character: 'https://flagcdn.com/at.svg' },
+		// 	{ title: 'Azerbaijan', character: 'https://flagcdn.com/az.svg' },
+		// 	{ title: 'Bahamas', character: 'https://flagcdn.com/bs.svg' },
+		// 	{ title: 'Bahrain', character: 'https://flagcdn.com/bh.svg' },
+		// 	{ title: 'Bangladesh', character: 'https://flagcdn.com/bd.svg' },
+		// 	{ title: 'Barbados', character: 'https://flagcdn.com/bb.svg' },
+		// 	{ title: 'Belarus', character: 'https://flagcdn.com/by.svg' },
+		// 	{ title: 'Belgium', character: 'https://flagcdn.com/be.svg' },
+		// 	{ title: 'Belize', character: 'https://flagcdn.com/bz.svg' },
+		// 	{ title: 'Benin', character: 'https://flagcdn.com/bj.svg' },
+		// 	{ title: 'Bhutan', character: 'https://flagcdn.com/bt.svg' },
+		// 	{ title: 'Bolivia', character: 'https://flagcdn.com/bo.svg' },
+		// 	{ title: 'Bosnia and Herzegovina', character: 'https://flagcdn.com/ba.svg' },
+		// 	{ title: 'Botswana', character: 'https://flagcdn.com/bw.svg' },
+		// 	{ title: 'Brazil', character: 'https://flagcdn.com/br.svg' },
+		// 	{ title: 'Brunei', character: 'https://flagcdn.com/bn.svg' },
+		// 	{ title: 'Bulgaria', character: 'https://flagcdn.com/bg.svg' },
+		// 	{ title: 'Burkina Faso', character: 'https://flagcdn.com/bf.svg' },
+		// 	{ title: 'Burundi', character: 'https://flagcdn.com/bi.svg' },
+		// 	{ title: 'Cabo Verde', character: 'https://flagcdn.com/cv.svg' },
+		// 	{ title: 'Cambodia', character: 'https://flagcdn.com/kh.svg' },
+		// 	{ title: 'Cameroon', character: 'https://flagcdn.com/cm.svg' },
+		// 	{ title: 'Canada', character: 'https://flagcdn.com/ca.svg' },
+		// 	{ title: 'Central African Republic', character: 'https://flagcdn.com/cf.svg' },
+		// 	{ title: 'Chad', character: 'https://flagcdn.com/td.svg' },
+		// 	{ title: 'Chile', character: 'https://flagcdn.com/cl.svg' },
+		// 	{ title: 'China', character: 'https://flagcdn.com/cn.svg' },
+		// 	{ title: 'Colombia', character: 'https://flagcdn.com/co.svg' },
+		// 	{ title: 'Comoros', character: 'https://flagcdn.com/km.svg' },
+		// 	{ title: 'Congo (Congo-Brazzaville)', character: 'https://flagcdn.com/cg.svg' },
+		// 	{ title: 'Costa Rica', character: 'https://flagcdn.com/cr.svg' },
+		// 	{ title: 'Croatia', character: 'https://flagcdn.com/hr.svg' },
+		// 	{ title: 'Cuba', character: 'https://flagcdn.com/cu.svg' },
+		// 	{ title: 'Cyprus', character: 'https://flagcdn.com/cy.svg' },
+		// 	{ title: 'Czechia', character: 'https://flagcdn.com/cz.svg' },
+		// 	{ title: 'Denmark', character: 'https://flagcdn.com/dk.svg' },
+		// 	{ title: 'Djibouti', character: 'https://flagcdn.com/dj.svg' },
+		// 	{ title: 'Dominica', character: 'https://flagcdn.com/dm.svg' },
+		// 	{ title: 'Dominican Republic', character: 'https://flagcdn.com/do.svg' },
+		// 	{ title: 'Ecuador', character: 'https://flagcdn.com/ec.svg' },
+		// 	{ title: 'Egypt', character: 'https://flagcdn.com/eg.svg' },
+		// 	{ title: 'El Salvador', character: 'https://flagcdn.com/sv.svg' },
+		// 	{ title: 'Equatorial Guinea', character: 'https://flagcdn.com/gq.svg' },
+		// 	{ title: 'Eritrea', character: 'https://flagcdn.com/er.svg' },
+		// 	{ title: 'Estonia', character: 'https://flagcdn.com/ee.svg' },
+		// 	{ title: 'Eswatini', character: 'https://flagcdn.com/sz.svg' },
+		// 	{ title: 'Ethiopia', character: 'https://flagcdn.com/et.svg' },
+		// 	{ title: 'Fiji', character: 'https://flagcdn.com/fj.svg' },
+		// 	{ title: 'Finland', character: 'https://flagcdn.com/fi.svg' },
+		// 	{ title: 'France', character: 'https://flagcdn.com/fr.svg' },
+		// 	{ title: 'Gabon', character: 'https://flagcdn.com/ga.svg' },
+		// 	{ title: 'Gambia', character: 'https://flagcdn.com/gm.svg' },
+		// 	{ title: 'Georgia', character: 'https://flagcdn.com/ge.svg' },
+		// 	{ title: 'Germany', character: 'https://flagcdn.com/de.svg' },
+		// 	{ title: 'Ghana', character: 'https://flagcdn.com/gh.svg' },
+		// 	{ title: 'Greece', character: 'https://flagcdn.com/gr.svg' },
+		// 	{ title: 'Grenada', character: 'https://flagcdn.com/gd.svg' },
+		// 	{ title: 'Guatemala', character: 'https://flagcdn.com/gt.svg' },
+		// 	{ title: 'Guinea', character: 'https://flagcdn.com/gn.svg' },
+		// 	{ title: 'Guinea-Bissau', character: 'https://flagcdn.com/gw.svg' },
+		// 	{ title: 'Guyana', character: 'https://flagcdn.com/gy.svg' },
+		// 	{ title: 'Haiti', character: 'https://flagcdn.com/ht.svg' },
+		// 	{ title: 'Honduras', character: 'https://flagcdn.com/hn.svg' },
+		// 	{ title: 'Hungary', character: 'https://flagcdn.com/hu.svg' },
+		// 	{ title: 'Iceland', character: 'https://flagcdn.com/is.svg' },
+		// 	{ title: 'India', character: 'https://flagcdn.com/in.svg' },
+		// 	{ title: 'Indonesia', character: 'https://flagcdn.com/id.svg' },
+		// 	{ title: 'Iran', character: 'https://flagcdn.com/ir.svg' },
+		// 	{ title: 'Iraq', character: 'https://flagcdn.com/iq.svg' },
+		// 	{ title: 'Ireland', character: 'https://flagcdn.com/ie.svg' },
+		// 	{ title: 'Italy', character: 'https://flagcdn.com/it.svg' },
+		// 	{ title: 'Jamaica', character: 'https://flagcdn.com/jm.svg' },
+		// 	{ title: 'Japan', character: 'https://flagcdn.com/jp.svg' },
+		// 	{ title: 'Jordan', character: 'https://flagcdn.com/jo.svg' },
+		// 	{ title: 'Kazakhstan', character: 'https://flagcdn.com/kz.svg' },
+		// 	{ title: 'Kenya', character: 'https://flagcdn.com/ke.svg' },
+		// 	{ title: 'Kiribati', character: 'https://flagcdn.com/ki.svg' },
+		// 	{ title: 'Kuwait', character: 'https://flagcdn.com/kw.svg' }
+		// ] );
 	}
 
 	addItems( groupName, items ) {

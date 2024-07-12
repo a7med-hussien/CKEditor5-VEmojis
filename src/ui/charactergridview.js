@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { View, ButtonView } from 'ckeditor5';
 
 import '../../theme/charactergrid.css';
@@ -36,7 +37,7 @@ export default class CharacterGridView extends View {
 
 		tile.set( {
 			label: character,
-			withText: true,
+			withText: !character.includes( '.svg' ),
 			class: 'ck-character-grid__tile ck-emoji-grid-font-size'
 		} );
 
@@ -44,7 +45,8 @@ export default class CharacterGridView extends View {
 		// For now we're using native title attribute for that, see #5817.
 		tile.extendTemplate( {
 			attributes: {
-				title: name
+				title: name,
+				style: character.includes( '.svg' ) ? `background-image: url(${ character }); background-size: cover; background-position: center; width: 24px; height: 24px;` : ''
 			},
 			on: {
 				mouseover: tile.bindTemplate.to( 'mouseover' )
